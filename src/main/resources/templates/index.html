@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="./styles.css"/>
+<head>
+    <meta charset="UTF-8">
+    <title>To do list</title>
+</head>
+<body>
+<div class="jumbotron">
+    <h1 class="display-4">To Do List (v1.1)</h1>
+    <p class="lead">This is a simple todo application.</p>
+    <hr class="my-4">
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Task</th>
+        <th>Start</th>
+        <th>Deadline (days)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="page : ${book}" th:style="${page.toBeFinished()} ? 'background-image: linear-gradient(to right, #f0cece, #e6b1b3, #db9598, #cf7880, #c25b68);' : 'background-image: linear-gradient(to right, #bdedbf, #a7e3a7, #92d88e, #7dcd75, #68c25b);'">
+        <form action="#" th:action="@{/delete/{path}(path=${page.getPageNumber()})}" method="get">
+                <td th:text="${page.getContent()}"></td>
+                <td th:text="${page.getDate()}"></td>
+                <td th:text="${page.getDaysToFinish()}"></td>
+            <td><input type="submit" class="btn btn-success" value="Done"></td>
+        </form>
+    </tr>
+    <tr>
+        <form action="#" th:action="@{/add}" th:object="${newtask}" method="post">
+            <td><input type="text" th:field="*{content}"></td>
+            <td></td>
+            <td><input type="text" th:field="*{daysToFinish}"></td>
+            <td><input type="submit" class="btn btn-info" value="To do"></td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
